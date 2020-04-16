@@ -14,7 +14,7 @@
 
         <div class="new">
           <h3>Add a New Post</h3>
-          <form>
+          <form @submit.prevent="addPost">
             <input
               id="title"
               type="text"
@@ -39,10 +39,14 @@
             <button type="submit">Add new blog post</button>
           </form>
         </div>
-        <select>
+        <select v-model="selected">
           <option disable value="">Filter with a label</option>
+          <option>Video Games</option>
+          <option>Makeup</option>
+          <option>Kpop</option>
+          <option>Manga</option>
         </select>
-        <div v-for="post in posts" class="post">
+        <div v-for="(post, i) in filterLabel" class="post">
           <span class="label">{{ post.label }}</span>
           <p>{{ post.title }}</p>
           <small>{{ post.author }}</small>
@@ -96,19 +100,25 @@
         newLabel: '',
       };
     },
-    methods:{
-        addPost(){
-            let addedPost = new Object({
-                author: this.newAuthor,
-                title: this.newTitle,
-                label: this.newLabel
-            })
+    methods: {
+      addPost() {
+        let addedPost = new Object({
+          author: '@' + this.newAuthor,
+          title: this.newTitle,
+          label: this.newLabel,
+        });
 
-            this.posts.push(addedPost);
-            this.newTitle = '',
-            this.newAuthor = '',
-            this.newLabel = '',
-        }
-    }
+        this.posts.push(addedPost);
+        this.newTitle = '';
+        this.newAuthor = '';
+        this.newLabel = '';
+      },
+    },
+    computed: {
+      filterLabel() {
+        let filter = new RegExp(this.selected, 'i');
+        return this.posts.filter((el) => el.label.match(filter));
+      },
+    },
   });
 </script>
