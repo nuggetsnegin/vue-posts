@@ -10,10 +10,44 @@
   <body>
     <div id="app">
       <div class="contain">
-        <h1>Blog Posts</h1>
-      </div>
+        <h2>Blog Posts</h2>
 
-      <div class="new"></div>
+        <div class="new">
+          <h3>Add a New Post</h3>
+          <form>
+            <input
+              id="title"
+              type="text"
+              placeholder="title"
+              required
+              v-model="newTitle"
+            />
+            <input
+              id="author"
+              type="text"
+              placeholder="author name"
+              required
+              v-model="newAuthor"
+            />
+            <select required v-model="newLabel">
+              <option disable value="">Add a new label</option>
+              <option>Video Games</option>
+              <option>Makeup</option>
+              <option>Kpop</option>
+              <option>Manga</option>
+            </select>
+            <button type="submit">Add new blog post</button>
+          </form>
+        </div>
+        <select>
+          <option disable value="">Filter with a label</option>
+        </select>
+        <div v-for="post in posts" class="post">
+          <span class="label">{{ post.label }}</span>
+          <p>{{ post.title }}</p>
+          <small>{{ post.author }}</small>
+        </div>
+      </div>
     </div>
   </body>
 </html>
@@ -26,54 +60,35 @@
         selected: '',
         posts: [
           {
-            author: '@vFitzgerald',
-            title: 'Quod Ducimus Omnis',
-            label: 'science',
+            author: '@negieggi',
+            title: 'I love EXO!',
+            label: 'Kpop',
           },
           {
-            author: '@mPalmer',
-            title: 'Vero Eius Laboriosam Ex Repudiandae',
-            label: 'math',
+            author: '@naerok',
+            title: 'Wow, when is Nintendo releasing ffcc?',
+            label: 'Video Games',
           },
           {
-            author: '@mDean',
-            title: 'Magnam Odit',
-            label: 'science',
+            author: '@notnaerok',
+            title: 'Wow this new chapter of One Punch is amazeballs',
+            label: 'Manga',
           },
           {
-            author: '@tCole',
-            title: 'Velit Mollitia Voluptates Assumenda',
-            label: 'science',
+            author: '@daen',
+            title: '@negieggi does not know her lefts and rights smh',
+            label: 'Video Games',
           },
           {
-            author: '@jCooper',
-            title: 'Eum Commodi Cupiditate',
-            label: 'poetry',
+            author: '@yamyan',
+            title: 'This chicken and rice diet has done wonders for my face!!',
+            label: 'Makeup',
           },
           {
-            author: '@lLamb',
-            title: 'Amet',
-            label: 'history',
-          },
-          {
-            author: '@fMartin',
-            title: 'Voluptatem Fuga Cum Asperiores Error',
-            label: 'science',
-          },
-          {
-            author: '@eHayes',
-            title: 'Ipsa Consectetur Rerum Repellat Quia',
-            label: 'math',
-          },
-          {
-            author: '@cCollier',
-            title: 'Dolor Nihil Delectus',
-            label: 'science',
-          },
-          {
-            author: '@cBenson',
-            title: 'Labore Ipsum Ad Pariatur',
-            label: 'poetry',
+            author: '@mendo',
+            title:
+              'Hey @fanny what are we eating for dinner? also idk how tags work lol',
+            label: 'Kpop',
           },
         ],
         newTitle: '',
@@ -81,5 +96,19 @@
         newLabel: '',
       };
     },
+    methods:{
+        addPost(){
+            let addedPost = new Object({
+                author: this.newAuthor,
+                title: this.newTitle,
+                label: this.newLabel
+            })
+
+            this.posts.push(addedPost);
+            this.newTitle = '',
+            this.newAuthor = '',
+            this.newLabel = '',
+        }
+    }
   });
 </script>
